@@ -1,9 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-
 interface CollectibleCardProps {
+    id: string;
     name: string;
     image: string;
     species?: string;
@@ -11,13 +9,11 @@ interface CollectibleCardProps {
     mass?: string;
     gender?: string;
     homeworld?: string;
-    cardType: "light" | "dark"; // Para determinar el estilo del borde
-    rarity?: number; // 1-5 estrellas
-    power?: number; // Poder de ataque/defensa
-    className?: string;
+    cardType?: "special" | "regular";
 }
 
 export default function CollectibleCard({
+    id,
     name,
     image,
     species,
@@ -25,94 +21,71 @@ export default function CollectibleCard({
     mass,
     gender,
     homeworld,
-    cardType = "light",
-    rarity = 1,
-    power,
-    className,
+    cardType = "regular",
 }: CollectibleCardProps) {
+    const hexColor =
+        cardType === "special" ? "bg-yellow-400 shadow-yellow-500/50" : "bg-slate-300 shadow-slate-400";
+    const headerColor =
+        cardType === "special" ? "from-yellow-700 to-yellow-900" : "from-slate-700 to-slate-900";
+
     return (
-        <div
-            className={cn(
-                "relative w-[300px] h-[420px] rounded-lg p-1",
-                "transform transition-transform duration-300 hover:scale-105",
-                "cursor-pointer perspective-1000",
-                cardType === "light" ? "card-light" : "card-dark",
-                className
-            )}
-        >
-            {/* Marco exterior con brillo */}
-            <div className="absolute inset-0 rounded-lg border-2 border-opacity-30 bg-gradient-to-br from-transparent to-white/10" />
+        <div className="relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 border-slate-900 shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105">
+            {/* Header */}
+            <div
+                className={`relative bg-linear-to-b ${headerColor} text-white font-bold text-center uppercase px-3 py-2 shadow-inner`}
+            >
+                {/* Hexágono ID */}
+                <div
+                    className={`z-50 absolute left-1 top-1 w-10 h-10 clip-hex flex items-center justify-center text-xs font-bold text-neutral-900 ${hexColor}`}
+                >
+                    #{id}
+                </div>
 
-            {/* Contenido principal */}
-            <div className="relative h-full w-full rounded-lg bg-black/80 p-3 flex flex-col">
-                {/* Nombre */}
-                <h3 className={cn(
-                    "text-lg font-bold mb-2 text-center font-['SF_Distant_Galaxy']",
-                    cardType === "light" ? "text-blue-400" : "text-red-500"
-                )}>
+                <h2 className="text-lg tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)]">
                     {name}
-                </h3>
+                </h2>
+            </div>
 
-                {/* Imagen */}
-                <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden">
-                    <img
-                        src={image}
-                        alt={name}
-                        className="object-cover"
-                        sizes="(max-width: 300px) 100vw, 300px"
-                    />
-                </div>
+            {/* Imagen */}
+            <div className="relative w-full h-44 bg-neutral-800 overflow-hidden border-y border-slate-600">
+                <img
+                    src={image}
+                    alt={name}
+                    className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+                />
+            </div>
 
-                {/* Stats */}
-                <div className="flex flex-col gap-2 text-sm">
-                    {species && (
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Species:</span>
-                            <span className="text-white">{species}</span>
-                        </div>
-                    )}
-                    {height && (
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Height:</span>
-                            <span className="text-white">{height}</span>
-                        </div>
-                    )}
-                    {mass && (
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Mass:</span>
-                            <span className="text-white">{mass}</span>
-                        </div>
-                    )}
-                    {gender && (
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Gender:</span>
-                            <span className="text-white">{gender}</span>
-                        </div>
-                    )}
-                    {homeworld && (
-                        <div className="flex justify-between">
-                            <span className="text-gray-400">Homeworld:</span>
-                            <span className="text-white">{homeworld}</span>
-                        </div>
-                    )}
+            {/* Species Bar */}
+            {species && (
+                <div
+                    className={`bg-linear-to-b ${headerColor} text-center text-sm text-yellow-300 py-1 uppercase font-semibold tracking-wider shadow-inner`}
+                >
+                    {species}
                 </div>
+            )}
 
-                {/* Power y Rareza */}
-                <div className="mt-auto pt-3 flex justify-between items-center">
-                    {power && (
-                        <div className={cn(
-                            "px-3 py-1 rounded-full text-sm font-bold",
-                            cardType === "light" ? "bg-blue-500/20 text-blue-300" : "bg-red-500/20 text-red-300"
-                        )}>
-                            Power: {power}
-                        </div>
-                    )}
-                    <div className="flex gap-1">
-                        {[...Array(rarity)].map((_, i) => (
-                            <span key={i} className="text-yellow-400">★</span>
-                        ))}
-                    </div>
-                </div>
+            {/* Stats */}
+            <div className="flex flex-col gap-1 px-3 py-3 text-xs text-yellow-950 font-mono bg-stone-200">
+                {height && (
+                    <p>
+                        <span className="text-slate-500">Altura:</span> {height}
+                    </p>
+                )}
+                {mass && (
+                    <p>
+                        <span className="text-slate-500">Peso:</span> {mass}
+                    </p>
+                )}
+                {gender && (
+                    <p>
+                        <span className="text-slate-500">Género:</span> {gender}
+                    </p>
+                )}
+                {homeworld && (
+                    <p>
+                        <span className="text-slate-500">Mundo natal:</span> {homeworld}
+                    </p>
+                )}
             </div>
         </div>
     );
