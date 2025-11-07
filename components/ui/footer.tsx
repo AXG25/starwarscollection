@@ -6,12 +6,12 @@ import { GlassCard } from "./glass-card";
 export default function Footer() {
     return (
         <footer className="fixed bottom-0 left-0 w-full z-50">
-            <GlassCard className="py-4">
+            <GlassCard className="py-1">
                 <Container className="text-center">
                     <img
                         src="/images/logo.png"
                         alt="Star Wars Logo"
-                        className="h-20 mx-auto mb-1 brightness-0 invert"
+                        className="h-16 mx-auto mb-1 brightness-0 invert"
                     />
                     <p className="text-sm text-white">
                         Hecho con mucho cariño por{" "}

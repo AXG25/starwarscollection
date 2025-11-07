@@ -10,10 +10,10 @@ export default function Header() {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50">
-            <GlassCard className="py-6">
+            <GlassCard className="py-2">
                 <Container>
                     <div className="text-center">
-                        <h1 className="text-[#FFE81F] text-4xl font-bold uppercase tracking-wider font-['SF_Distant_Galaxy_Outline'] mb-6 drop-shadow-[0_0_10px_rgba(255,232,31,0.5)]">
+                        <h1 className="text-[#FFE81F] text-2xl font-bold uppercase tracking-wider font-['SF_Distant_Galaxy_Outline'] mb-6 drop-shadow-[0_0_10px_rgba(255,232,31,0.5)]">
                             Star Wars Collection TCG
                         </h1>
 
@@ -45,7 +45,7 @@ function NavLink({ href, children, isActive }: NavLinkProps) {
         <Link
             href={href}
             className={`
-        text-lg px-4 py-2 rounded transition-all duration-300 font-['SF_Distant_Galaxy'] tracking-wider
+        text-sm px-4 py-2 rounded transition-all duration-100 font-['SF_Distant_Galaxy'] tracking-wider
         ${isActive ? "text-[#FFE81F] border border-[#FFE81F]" : "text-white border border-transparent"}
         hover:text-[#FFE81F] hover:border-[#FFE81F]
       `}

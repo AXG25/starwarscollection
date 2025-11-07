@@ -32,10 +32,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{
-          minHeight: "100vh",
-          position: "relative",
-          paddingBottom: "120px",
-          paddingTop: "160px" // Espacio para el header
+          paddingBottom: "80px",
+          paddingTop: "80px"
         }}
       >
         <AudioProvider>

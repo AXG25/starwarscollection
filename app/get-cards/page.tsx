@@ -1,7 +1,12 @@
-import { Button } from "@/components/ui/button";
+import BoosterPack from "@/components/ui/booster-pack";
 
 export default function GetCardsPage() {
     return (
-        <Button className="text-yellow-500">obtener láminas</Button>
+        <div className="pt-12 flex flex-wrap justify-center gap-6">
+            <BoosterPack />
+            <BoosterPack />
+            <BoosterPack />
+            <BoosterPack />
+        </div>
     );
 }

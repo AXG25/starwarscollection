@@ -1,12 +1,12 @@
 "use client";
 
 interface CollectibleCardProps {
-    id: string;
+    id: string | number;
     name: string;
     image: string;
     species?: string;
-    height?: string;
-    mass?: string;
+    height?: string | number;
+    mass?: string | number;
     gender?: string;
     homeworld?: string;
     cardType?: "special" | "regular";
@@ -28,21 +28,20 @@ export default function CollectibleCard({
     const headerColor =
         cardType === "special" ? "from-yellow-700 to-yellow-900" : "from-slate-700 to-slate-900";
 
+    const MAX_NAME_CHARS = 18;
+    const displayName = name.length > MAX_NAME_CHARS ? `${name.slice(0, MAX_NAME_CHARS)}...` : name;
+
     return (
         <div className="relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 border-slate-900 shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105">
             {/* Header */}
             <div
                 className={`relative bg-linear-to-b ${headerColor} text-white font-bold text-center uppercase px-3 py-2 shadow-inner`}
             >
-                {/* Hexágono ID */}
-                <div
-                    className={`z-50 absolute left-1 top-1 w-10 h-10 clip-hex flex items-center justify-center text-xs font-bold text-neutral-900 ${hexColor}`}
+                <h2
+                    className="text-sm tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate"
+                    title={name}
                 >
-                    #{id}
-                </div>
-
-                <h2 className="text-lg tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)]">
-                    {name}
+                    {displayName}
                 </h2>
             </div>
 
@@ -51,8 +50,15 @@ export default function CollectibleCard({
                 <img
                     src={image}
                     alt={name}
-                    className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+                    className="w-full h-full object-contain bg-black/50"
                 />
+
+                {/* Hexágono ID */}
+                <div
+                    className={`z-50 absolute left-1 top-1 w-10 h-10 clip-hex flex items-center justify-center text-xs font-bold text-neutral-900 ${hexColor}`}
+                >
+                    #{id}
+                </div>
             </div>
 
             {/* Species Bar */}
@@ -65,7 +71,7 @@ export default function CollectibleCard({
             )}
 
             {/* Stats */}
-            <div className="flex flex-col gap-1 px-3 py-3 text-xs text-yellow-950 font-mono bg-stone-200">
+            <div className="flex flex-col gap-1 px-3 py-3 text-sm text-yellow-950 font-mono bg-stone-200">
                 {height && (
                     <p>
                         <span className="text-slate-500">Altura:</span> {height}
