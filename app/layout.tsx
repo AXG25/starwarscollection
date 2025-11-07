@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AudioPlayer from "../components/ui/audio-player";
+import QueryProvider from "../app/providers/query-provider";
 import Footer from "../components/ui/footer";
 import Header from "../components/ui/header";
-import { AudioProvider } from "./providers";
+import { AudioProvider } from "./providers/audio-provider";
 import GlobalClickSound from "@/components/globalClickSound";
 
 const geistSans = Geist({
@@ -36,14 +37,16 @@ export default function RootLayout({
           paddingTop: "80px"
         }}
       >
-        <AudioProvider>
-          <GlobalClickSound />
-          <Header />
-          {children}
-          <AudioPlayer />
-          <Footer />
-          <audio id="bgMusic" src="/music/track.mp3" loop preload="auto" />
-        </AudioProvider>
+        <QueryProvider>
+          <AudioProvider>
+            <GlobalClickSound />
+            <Header />
+            {children}
+            <AudioPlayer />
+            <Footer />
+            <audio id="bgMusic" src="/music/track.mp3" loop preload="auto" />
+          </AudioProvider>
+        </QueryProvider>
       </body>
     </html>
   );

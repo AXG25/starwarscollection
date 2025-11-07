@@ -42,16 +42,18 @@ export default function CollectibleCard({
     cardType = "regular",
 }: CollectibleCardProps) {
     const hexColor =
-        cardType === "special" ? "bg-yellow-400 shadow-yellow-500/50" : "bg-slate-300 shadow-slate-400";
+        cardType === "special" ? "bg-yellow-400 shadow-yellow-500/50" : "bg-slate-300 shadow-slate-400 border-yellow-400";
     const headerColor =
         cardType === "special" ? "from-yellow-700 to-yellow-900" : "from-slate-700 to-slate-900";
+    const borderColor =
+        cardType === "special" ? "border-yellow-400" : "border-slate-900";
 
     const cropText = (text: string, maxChars: number) => {
         return text.length > maxChars ? `${text?.slice(0, maxChars)}...` : text;
     }
 
     return (
-        <div className="relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 border-slate-900 shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105">
+        <div className={`relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 ${borderColor} shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105`}>
             {/* Header */}
             <div
                 className={`relative bg-linear-to-b ${headerColor} text-white font-bold text-center uppercase px-3 py-2 shadow-inner`}

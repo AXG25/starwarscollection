@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { GlassCard } from "./glass-card";
-import { useAudio } from "@/app/providers";
+import { useAudio } from "@/app/providers/audio-provider";
 import { Button } from "./button";
 
 export default function AudioPlayer() {

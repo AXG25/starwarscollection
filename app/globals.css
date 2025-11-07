@@ -75,6 +75,7 @@ body::before {
   background-size: 200px 200px;
   animation: move-background 20s linear infinite;
   opacity: 0.5;
+  pointer-events: none;
   will-change: background-position;
 }
 
@@ -94,6 +95,7 @@ body::after {
   background-size: 200px 200px;
   animation: move-background 30s linear infinite, twinkle 3s ease-in-out infinite;
   opacity: 0.3;
+  pointer-events: none;
   will-change: background-position;
 }
 
