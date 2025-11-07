@@ -2,12 +2,19 @@
 
 import { Container } from "./container";
 import { GlassCard } from "./glass-card";
+import { usePackLock } from "@/app/providers/pack-lock-provider";
 
 export default function Footer() {
+    const { isLocked, remainingLabel } = usePackLock();
     return (
         <footer className="fixed bottom-0 left-0 w-full z-50">
-            <GlassCard className="py-1">
+            <GlassCard className="py-1 relative">
                 <Container className="text-center">
+                    {isLocked && (
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-mono px-3 py-1 rounded bg-yellow-400/20 text-yellow-300 border border-yellow-400/50">
+                            Sobres bloqueados: {remainingLabel}
+                        </span>
+                    )}
                     <img
                         src="/images/logo.png"
                         alt="Star Wars Logo"

@@ -4,27 +4,47 @@ import { useStarWarsSet } from "@/hooks/useStarWarsSet";
 import { useState } from "react";
 import Modal from "./modal";
 import CollectibleCard from "./collectible-card";
+import { usePackLock } from "@/app/providers/pack-lock-provider";
 
-export default function BoosterPack() {
+export default function BoosterPack({ packId }: { packId: number }) {
     const { mutateAsync } = useStarWarsSet();
     const [isOpen, setIsOpen] = useState(false);
     const [packData, setPackData] = useState<any | null>(null);
+    const { isLockedForPack, lock, clearLock, remainingLabel } = usePackLock();
 
+    const locked = isLockedForPack(packId);
 
     const handleClick = async () => {
-        const result = await mutateAsync();
-        setPackData(result);
-        setIsOpen(true);
+        if (locked) return;
+        // Iniciamos el bloqueo de los sobres restantes durante 1 minuto
+        lock(60_000, packId);
+        try {
+            const result = await mutateAsync();
+            setPackData(result);
+            setIsOpen(true);
+        } catch (err) {
+            // Si falla la carga del sobre, liberamos el bloqueo
+            clearLock();
+        }
     };
 
     return (
         <>
-            <div className="group relative h-full w-90 select-none" onClick={handleClick}>
+            <div
+                className={`group relative h-full w-90 select-none ${locked ? "cursor-not-allowed opacity-70" : "cursor-pointer"}`}
+                onClick={handleClick}
+            >
                 <img
                     src="/images/pack-img.png"
                     alt="Booster Pack"
                     className="object-contain drop-shadow-[0_10px_20px_rgba(255,217,59,0.25)] transition-transform duration-700 ease-out group-hover:scale-[1.08] group-hover:-translate-y-1"
                 />
+                {locked && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 text-yellow-300 font-bold rounded-md">
+                        <div className="text-sm uppercase">Bloqueado</div>
+                        <div className="text-lg font-mono">{remainingLabel}</div>
+                    </div>
+                )}
             </div>
 
             <Modal open={isOpen} onClose={() => setIsOpen(false)} title="Tu Booster Pack">
