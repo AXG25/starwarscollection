@@ -93,7 +93,7 @@ export default function CollectibleCard({
 
 
             {/* Stats */}
-            <div className="flex flex-col gap-1 px-3 py-3 text-sm text-yellow-950 font-mono bg-stone-200">
+            <div className="flex flex-col gap-1 px-3 py-3 text-sm text-yellow-950 font-mono bg-stone-200 h-full">
                 {height && (
                     <p>
                         <span className="text-slate-500">Altura:</span> {height}
@@ -151,7 +151,7 @@ export default function CollectibleCard({
                 )}
                 {cargo_capacity && (
                     <p>
-                        <span className="text-slate-500">Capacidad de carga:</span> {cargo_capacity}
+                        <span className="text-slate-500">Capacidad:</span> {cargo_capacity}
                     </p>
                 )}
             </div>

@@ -1,5 +1,5 @@
 import { swapi, starwarsApi } from "./axiosClient";
-import { getUniqueRandomIds } from "@/utils/random";
+import { getUniqueRandomIds, getRandomId } from "@/utils/random";
 
 export async function fetchCharacters(count: number) {
     const ids = getUniqueRandomIds(count, 1, 82);
@@ -9,18 +9,43 @@ export async function fetchCharacters(count: number) {
 }
 
 export async function fetchStarships(count: number) {
-    const ids = getUniqueRandomIds(count, 1, 36);
-    const promises = ids.map((id) => swapi.get(`/starships/${id}/`));
-    const responses = await Promise.allSettled(promises);
-    // filtra los fallos (algunos ids en SWAPI están vacíos)
-    return responses
-        .filter((r): r is PromiseFulfilledResult<any> => r.status === "fulfilled")
-        .map((r) => r.value.data);
+    const maxId = 36;
+    const results: any[] = [];
+    const triedIds = new Set<number>();
+    let attempts = 0;
+    const attemptsLimit = 1000; // evita bucles infinitos si la API falla
+
+    while (results.length < count && attempts < attemptsLimit) {
+        // genera un id que no se haya intentado aún
+        let id = getRandomId(1, maxId);
+        let guard = 0;
+        while (triedIds.has(id) && guard < 100) {
+            id = getRandomId(1, maxId);
+            guard++;
+        }
+        triedIds.add(id);
+
+        try {
+            const res = await swapi.get(`/starships/${id}/`);
+            results.push({ ...res.data, id });
+        } catch (err) {
+            // si falla, solo continuamos para intentar con otro id
+        }
+
+        attempts++;
+    }
+
+    // si por algún motivo no logramos el número solicitado, devolvemos los que haya
+    return results.slice(0, count);
 }
 
 export async function fetchFilms(count: number = 1) {
     const ids = getUniqueRandomIds(count, 1, 6);
     const promises = ids.map((id) => swapi.get(`/films/${id}/`));
     const responses = await Promise.all(promises);
-    return responses.map((res) => res.data);
+
+    return responses.map((res, index) => ({
+        ...res.data,
+        id: ids[index],
+    }));
 }
