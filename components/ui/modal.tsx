@@ -64,7 +64,7 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
         </div>
 
         {/* Body */}
-        <div className="max-h-[70vh] overflow-y-auto p-5">
+        <div className="max-h-[70vh] overflow-y-auto p-5 mb-5 flex justify-center">
           {children}
         </div>
       </div>

@@ -22,6 +22,7 @@ interface CollectibleCardProps {
     section?: "Peliculas" | "Naves" | "Personajes" | string;
     actions?: React.ReactNode;
     onClick?: () => void;
+    disableCrop?: boolean;
 }
 
 export default function CollectibleCard({
@@ -46,6 +47,7 @@ export default function CollectibleCard({
     section,
     actions,
     onClick,
+    disableCrop = false,
 }: CollectibleCardProps) {
     const hexColor =
         cardType === "special" ? "bg-yellow-400 shadow-yellow-500/50" : "bg-slate-300 shadow-slate-400 border-yellow-400";
@@ -55,6 +57,7 @@ export default function CollectibleCard({
         cardType === "special" ? "border-yellow-400" : "border-slate-900";
 
     const cropText = (text: string, maxChars: number) => {
+        if (disableCrop) return text;
         return text.length > maxChars ? `${text?.slice(0, maxChars)}...` : text;
     }
 

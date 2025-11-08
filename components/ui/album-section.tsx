@@ -37,7 +37,7 @@ interface AlbumSectionProps {
     items?: AlbumItem[];
     loading?: boolean;
     skeletonCount?: number;
-
+    onCardClick?: (item: AlbumItem) => void;
 }
 
 export default function AlbumSection({
@@ -45,7 +45,7 @@ export default function AlbumSection({
     items,
     loading = false,
     skeletonCount = 6,
-
+    onCardClick,
 }: AlbumSectionProps) {
     // If loading, show a set of skeleton placeholders. Otherwise use provided items.
     const displayItems = loading ? Array.from({ length: skeletonCount }, (_, i) => ({ id: `skeleton-${i}` })) : items;
@@ -71,34 +71,35 @@ export default function AlbumSection({
                 ) : (
                     displayItems?.map((item) =>
                         hasFullData(item) ? (
-                            <CollectibleCard
-                                key={item.id}
-                                id={item.id}
-                                name={item.name || item.title || ""}
-                                image={item.image}
-                                bar={item.species || item.release_date || item.model || ""}
-                                height={item.height || ""}
-                                director={item.director || ""}
-                                manufacturer={item.manufacturer || ""}
-                                mass={item.mass || ""}
-                                producer={item.producer || ""}
-                                passengers={item.passengers || ""}
-                                gender={item.gender || ""}
-                                episode_id={item.episode_id || ""}
-                                crew={item.crew || ""}
-                                homeworld={item.homeworld || ""}
-                                opening_crawl={item.opening_crawl || ""}
-                                cargo_capacity={item.cargo_capacity || ""}
-                                cardType={
-                                    title === "Peliculas"
-                                        ? "special"
-                                        : title === "Personajes" && +item.id <= 20
+                            <div key={item.id} onClick={() => onCardClick?.(item)}>
+                                <CollectibleCard
+                                    id={item.id}
+                                    name={item.name || item.title || ""}
+                                    image={item.image}
+                                    bar={item.species || item.release_date || item.model || ""}
+                                    height={item.height || ""}
+                                    director={item.director || ""}
+                                    manufacturer={item.manufacturer || ""}
+                                    mass={item.mass || ""}
+                                    producer={item.producer || ""}
+                                    passengers={item.passengers || ""}
+                                    gender={item.gender || ""}
+                                    episode_id={item.episode_id || ""}
+                                    crew={item.crew || ""}
+                                    homeworld={item.homeworld || ""}
+                                    opening_crawl={item.opening_crawl || ""}
+                                    cargo_capacity={item.cargo_capacity || ""}
+                                    cardType={
+                                        title === "Peliculas"
                                             ? "special"
-                                            : title === "Naves" && +item.id <= 10
+                                            : title === "Personajes" && +item.id <= 20
                                                 ? "special"
-                                                : "regular"
-                                }
-                            />
+                                                : title === "Naves" && +item.id <= 10
+                                                    ? "special"
+                                                    : "regular"
+                                    }
+                                />
+                            </div>
                         ) : (
                             <CollectibleCardSkeleton key={item.id} id={item.id || ""} />
                         )
