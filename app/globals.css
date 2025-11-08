@@ -3,14 +3,14 @@
 
 @font-face {
   font-family: 'SF Distant Galaxy';
-  src: url('/fonts/SfDistantGalaxy.ttf') format('truetype');
+  src: url('/fonts/sf-distant-galaxy.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SF Distant Galaxy Outline';
-  src: url('/fonts/SfDistantGalaxyOutline.ttf') format('truetype');
+  src: url('/fonts/sf-distant-galaxy-outline.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
