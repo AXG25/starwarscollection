@@ -59,7 +59,7 @@ export default function AlbumSection({
     return (
         <section className={`album-section`} aria-labelledby={`section-${title}`}>
             <header className="flex items-center justify-between mb-2 mt-4">
-                <h3 id={`section-${title}`} className="text-lg md:text-xl font-bold uppercase text-yellow-300">
+                <h3 id={`section-${title}`} className="text-lg md:text-xl font-bold uppercase text-yellow-300 font-['SF_Distant_Galaxy_Outline']">
                     {title}
                 </h3>
 

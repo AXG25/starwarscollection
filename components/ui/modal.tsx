@@ -51,7 +51,7 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
       <div className="relative z-101 mx-4 w-full max-w-5xl rounded-2xl border border-yellow-500/40 bg-neutral-900 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-yellow-500/30 px-5 py-3">
-          <h2 className="text-yellow-300 text-lg font-bold uppercase tracking-wider">
+          <h2 className="text-yellow-300 text-lg font-bold uppercase tracking-wider font-['SF_Distant_Galaxy_Outline']">
             {title || "Booster Pack"}
           </h2>
           <button
