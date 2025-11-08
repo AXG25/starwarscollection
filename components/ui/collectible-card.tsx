@@ -19,6 +19,9 @@ interface CollectibleCardProps {
     crew?: string | number;
     cargo_capacity?: string | number;
     cardType?: "special" | "regular";
+    section?: "Peliculas" | "Naves" | "Personajes" | string;
+    actions?: React.ReactNode;
+    onClick?: () => void;
 }
 
 export default function CollectibleCard({
@@ -40,6 +43,9 @@ export default function CollectibleCard({
     crew,
     cargo_capacity,
     cardType = "regular",
+    section,
+    actions,
+    onClick,
 }: CollectibleCardProps) {
     const hexColor =
         cardType === "special" ? "bg-yellow-400 shadow-yellow-500/50" : "bg-slate-300 shadow-slate-400 border-yellow-400";
@@ -53,7 +59,10 @@ export default function CollectibleCard({
     }
 
     return (
-        <div className={`relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 ${borderColor} shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105`}>
+        <div
+            className={`relative w-64 bg-neutral-900 rounded-2xl overflow-hidden border-4 ${borderColor} shadow-[0_0_20px_rgba(0,0,0,0.7)] transition-transform duration-300 hover:scale-105`}
+            onClick={onClick}
+        >
             {/* Header */}
             <div
                 className={`relative bg-linear-to-b ${headerColor} text-white font-bold text-center uppercase px-3 py-2 shadow-inner`}
@@ -79,6 +88,13 @@ export default function CollectibleCard({
                     className={`z-50 absolute left-1 top-1 w-10 h-10 clip-hex flex items-center justify-center text-xs font-bold text-neutral-900 ${hexColor}`}
                 >
                     #{id}
+                </div>
+                {/* Badges */}
+                <div className="absolute right-1 top-1 flex gap-1">
+                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded bg-black/60 border ${borderColor} text-yellow-300`}>{cardType === "special" ? "SPECIAL" : "REGULAR"}</span>
+                    {section && (
+                        <span className="px-2 py-0.5 text-[10px] font-bold rounded bg-black/60 border border-slate-700 text-slate-300">{section}</span>
+                    )}
                 </div>
             </div>
 
@@ -155,6 +171,13 @@ export default function CollectibleCard({
                     </p>
                 )}
             </div>
+
+            {/* Actions slot */}
+            {actions && (
+                <div className="bg-neutral-900/90 border-t border-slate-800 p-2 flex justify-center">
+                    {actions}
+                </div>
+            )}
         </div>
     );
 }

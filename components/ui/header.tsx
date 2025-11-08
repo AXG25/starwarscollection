@@ -9,7 +9,7 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50">
+        <header className="fixed top-0 left-0 right-0 z-51">
             <GlassCard className="py-2">
                 <Container>
                     <div className="text-center">

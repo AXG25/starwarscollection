@@ -8,6 +8,7 @@ import Header from "../components/ui/header";
 import { AudioProvider } from "./providers/audio-provider";
 import GlobalClickSound from "@/components/globalClickSound";
 import { PackLockProvider } from "./providers/pack-lock-provider";
+import { AlbumProvider } from "./providers/album-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,12 +42,14 @@ export default function RootLayout({
         <QueryProvider>
           <AudioProvider>
             <PackLockProvider>
-              <GlobalClickSound />
-              <Header />
-              {children}
-              <AudioPlayer />
-              <Footer />
-              <audio id="bgMusic" src="/music/track.mp3" loop preload="auto" />
+              <AlbumProvider>
+                <GlobalClickSound />
+                <Header />
+                {children}
+                <AudioPlayer />
+                <Footer />
+                <audio id="bgMusic" src="/music/track.mp3" loop preload="auto" />
+              </AlbumProvider>
             </PackLockProvider>
           </AudioProvider>
         </QueryProvider>

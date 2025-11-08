@@ -100,7 +100,7 @@ export default function AlbumSection({
                                 }
                             />
                         ) : (
-                            <CollectibleCardSkeleton id={item.id || ""} />
+                            <CollectibleCardSkeleton key={item.id} id={item.id || ""} />
                         )
                     )
                 )}
