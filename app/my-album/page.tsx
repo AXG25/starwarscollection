@@ -80,7 +80,7 @@ export default function MyAlbumPage() {
         <AlbumSection title="Personajes" items={personajes} onCardClick={(item) => handleCardClick(item, +item.id <= 20 ? "special" : "regular")} />
       </div>
       {selectedCard && (
-        <Modal title={selectedCard.title} open={!!selectedCard} onClose={handleCloseModal}>
+        <Modal title={selectedCard.title || selectedCard.name} open={!!selectedCard} onClose={handleCloseModal}>
           <CollectibleCard {...selectedCard} disableCrop />
         </Modal>
       )}
